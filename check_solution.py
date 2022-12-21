@@ -1,14 +1,11 @@
 import sys
+import os
 import networkx as nx
 
-FOLDER_PATH = './dataset_weighted/MT-D-01'
-SOLUTION_FILE = 'solution.txt'
+SOLUTION_FILE = sys.argv[1]
+FOLDER_PATH = os.path.dirname(SOLUTION_FILE)
 
-if len(sys.argv) > 2:
-    FOLDER_PATH = sys.argv[1]
-    SOLUTION_FILE = sys.argv[2]
-
-    # Read graph
+# Read graph
 G = nx.Graph()
 
 for line in open(FOLDER_PATH + '/node_weights.txt'):
@@ -27,7 +24,7 @@ print(f"Edges: {len(G.edges)}")
 
 solution = set()
 
-with open(f'{FOLDER_PATH}/{SOLUTION_FILE}') as file:
+with open(SOLUTION_FILE) as file:
     for line in file:
         solution.add(line.rstrip('\n'))
 

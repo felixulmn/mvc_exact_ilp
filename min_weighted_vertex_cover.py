@@ -3,10 +3,7 @@ import time
 import networkx as nx
 from gurobipy import *
 
-FOLDER_PATH = './dataset_weighted/MT-D-01'
-
-if len(sys.argv) > 1:
-    FOLDER_PATH = sys.argv[1]
+FOLDER_PATH = sys.argv[1]
 
 # FIXME Problem with MT-D-01: multiple duplicate edges. E.g. edge (3,338) lines 19, 20
 

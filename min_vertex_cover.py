@@ -1,10 +1,8 @@
-from gurobipy import *
-
 import sys
 import time
 import networkx as nx
+from gurobipy import *
 
-sys.stdout.write("#")
 
 G = nx.Graph()
 max_clique_size = 0
@@ -31,13 +29,14 @@ try:
         m.addVar(vtype=GRB.BINARY, name=v)
     m.update()
 
-    # Objective Function#
+    # Objective Function
     obj = LinExpr()
     for v in G.nodes:
         obj.add(m.getVarByName(v))
     m.setObjective(obj, GRB.MINIMIZE)
     m.update()
 
+    # Add constraints
     for (u, v) in G.edges:
         xu = m.getVarByName(u)
         xv = m.getVarByName(v)
@@ -45,6 +44,7 @@ try:
 
     m.update()
     m.optimize()
+    m.write("min_vertex_cover.lp")
 
     print("Optimized.\nTotal running time:", "{:7.3f}".format(
         time.time()-start), "s.\nCurrent max clique size:", max_clique_size)
